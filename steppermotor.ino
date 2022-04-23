@@ -25,7 +25,7 @@ void loop(){
   // for(int i = 0; i<1000; i++){
   //   turnStepperMotor(2);
   //   delay(1);
-  }
+  // }
   // delay(1000);
   
   // for(int i = 0; i<10; i++){
@@ -43,7 +43,7 @@ void loop(){
   //   delay(500);
   // }
   // delay(1000);
-// }
+}
 
 static unsigned char count = 0;
 static bool isHalf = true;
