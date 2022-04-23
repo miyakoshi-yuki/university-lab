@@ -10,7 +10,6 @@ void setup(){
   pinMode(MotorPIN3, OUTPUT);
   pinMode(MotorPIN4, OUTPUT);
   // Serial.begin(9600);
-   // Serial.begin(9600);
 }
 void loop(){
   //   for(int i = 0; i<1000; i++){
