@@ -27,6 +27,8 @@ void setup() {
   
 }
 
+int16_t axRaw, ayRaw, azRaw, gxRaw, gyRaw, gzRaw, Temperature;
+// int16_t maxGx = 0;
 
 void loop() {
   Wire.beginTransmission(0x68);
@@ -34,7 +36,7 @@ void loop() {
   Wire.endTransmission(false);
   Wire.requestFrom(0x68, 14, true);
   while (Wire.available() < 14);
-  int16_t axRaw, ayRaw, azRaw, gxRaw, gyRaw, gzRaw, Temperature;
+//   int16_t axRaw, ayRaw, azRaw, gxRaw, gyRaw, gzRaw, Temperature;
 
   axRaw = Wire.read() << 8 | Wire.read();
   ayRaw = Wire.read() << 8 | Wire.read();
@@ -50,13 +52,21 @@ void loop() {
   float acc_z = azRaw / 16384.0;
 
   // 角速度値を分解能で割って角速度(degrees per sec)に変換する
-  float gyro_x = gxRaw / 131.0;//FS_SEL_0 131 LSB / (°/s)
-  float gyro_y = gyRaw / 131.0;
-  float gyro_z = gzRaw / 131.0;
+//   float gyro_x = gxRaw / 131.0;//FS_SEL_0 131 LSB / (°/s)
+//   float gyro_y = gyRaw / 131.0;
+//   float gyro_z = gzRaw / 131.0;
+//   if(maxGx < gyro_x){
+//       maxGx = gyro_x;
+//   }
+  
+  float gyro_x = map(gxRaw / 131.0, 0, 250, 0, 1);//FS_SEL_0 131 LSB / (°/s)
+  float gyro_y = map(gyRaw / 131.0, 0, 250, 0, 1);
+  float gyro_z = map(gzRaw / 131.0, 0, 250, 0, 1);
 
   Serial.print(acc_x);  Serial.print(",");
   Serial.print(acc_y);  Serial.print(",");
   Serial.print(acc_z);  Serial.print(",");
+//   Serial.print(maxGx); Serial.print(",");
   Serial.print(gyro_x); Serial.print(",");
   Serial.print(gyro_y); Serial.print(",");
   Serial.print(gyro_z); Serial.println("");
