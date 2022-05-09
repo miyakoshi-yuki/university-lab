@@ -22,6 +22,14 @@
  * なし
  * 
  * motorPIN_output[][] 返り値はありませんが、この配列にbool値が代入されます。
+ * 例
+ * 1-2相励磁,正回転,3番目のモータの場合
+ * turnStepperMotor(3,true,2);
+ * digitalWrite(2,motorPIN_output[2][0]);
+ * digitalWrite(3,motorPIN_output[2][1]);
+ * digitalWrite(4,motorPIN_output[2][2]);
+ * digitalWrite(5,motorPIN_output[2][3]);
+
  */
 
 // char motorPIN_arr[3][4] = {
