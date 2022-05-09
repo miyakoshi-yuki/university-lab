@@ -1,5 +1,5 @@
 {
     "port": "/dev/tty.usbmodem142301",
     "board": "arduino:avr:uno",
-    "sketch": "accelerometer.ino"
+    "sketch": "steppermotor.ino"
 }
