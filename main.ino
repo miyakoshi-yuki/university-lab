@@ -21,17 +21,35 @@
 #define MPU6050_WHO_AM_I     0x75  // Read Only
 #define MPU6050_PWR_MGMT_1   0x6B  // Read and Write
 #define MPU_ADDRESS  0x68
-#define MotorPIN1 2 // 青
-#define MotorPIN2 3 // ピンク
-#define MotorPIN3 4 // 黄
-#define MotorPIN4 5 // オレンジ
+// #define MotorPIN1 2 // 青
+// #define MotorPIN2 3 // ピンク
+// #define MotorPIN3 4 // 黄
+// #define MotorPIN4 5 // オレンジ
+
+char motorPIN_arr[3][4] = {
+  {2,3,4,5},
+  {6,7,8,9},
+  {10,11,12,13}
+};
+
+bool motorPIN_output[3][4] = {};
 
 // デバイス初期化時に実行される
 void setup() {
-  pinMode(MotorPIN1, OUTPUT);  // デジタルピンを出力に設定
-  pinMode(MotorPIN2, OUTPUT);
-  pinMode(MotorPIN3, OUTPUT);
-  pinMode(MotorPIN4, OUTPUT);
+  pinMode(motorPIN_arr[0][0], OUTPUT);  // デジタルピンを出力に設定
+  pinMode(motorPIN_arr[0][1], OUTPUT);
+  pinMode(motorPIN_arr[0][2], OUTPUT);
+  pinMode(motorPIN_arr[0][3], OUTPUT);
+
+  pinMode(motorPIN_arr[1][0], OUTPUT);  // デジタルピンを出力に設定
+  pinMode(motorPIN_arr[1][1], OUTPUT);
+  pinMode(motorPIN_arr[1][2], OUTPUT);
+  pinMode(motorPIN_arr[1][3], OUTPUT);
+
+  pinMode(motorPIN_arr[2][0], OUTPUT);  // デジタルピンを出力に設定
+  pinMode(motorPIN_arr[2][1], OUTPUT);
+  pinMode(motorPIN_arr[2][2], OUTPUT);
+  pinMode(motorPIN_arr[2][3], OUTPUT);
   Wire.begin();
 
   // PCとの通信を開始
@@ -90,7 +108,7 @@ void loop() {
   Serial.print(acc_x);  Serial.print(",");
   Serial.print(acc_y);  Serial.print(",");
   Serial.print(acc_z);  Serial.print(",");
-//   Serial.print(maxGx); Serial.print(",");
+ // Serial.print(maxGx); Serial.print(",");
   Serial.print(gyro_x); Serial.print(",");
   Serial.print(gyro_y); Serial.print(",");
   Serial.print(gyro_z); Serial.println("");
@@ -104,11 +122,37 @@ void loop() {
   //   delay(20);
   // }
 
-  if(acc_x >= 0){
-    turnStepperMotor(3,true);
+  if(acc_x > 0){
+    turnStepperMotor(1,1,0);
   }else{
-    turnStepperMotor(3,false);
+    turnStepperMotor(1,0,0);
   }
-  delay(800);
 
+  if(acc_y > 0){
+    turnStepperMotor(2,1,1);
+  }else{
+    turnStepperMotor(2,0,1);
+  }
+
+  if(acc_z > 0){
+    turnStepperMotor(3,1,2);
+  }else{
+    turnStepperMotor(3,0,2);
+  // delay(800);
+  }
+
+digitalWrite(motorPIN_arr[0][0],motorPIN_output[0][0]);
+digitalWrite(motorPIN_arr[0][1],motorPIN_output[0][1]);
+digitalWrite(motorPIN_arr[0][2],motorPIN_output[0][2]);
+digitalWrite(motorPIN_arr[0][3],motorPIN_output[0][3]);
+
+digitalWrite(motorPIN_arr[1][0],motorPIN_output[1][0]);
+digitalWrite(motorPIN_arr[1][1],motorPIN_output[1][1]);
+digitalWrite(motorPIN_arr[1][2],motorPIN_output[1][2]);
+digitalWrite(motorPIN_arr[1][3],motorPIN_output[1][3]);
+
+digitalWrite(motorPIN_arr[2][0],motorPIN_output[2][0]);
+digitalWrite(motorPIN_arr[2][1],motorPIN_output[2][1]);
+digitalWrite(motorPIN_arr[2][2],motorPIN_output[2][2]);
+digitalWrite(motorPIN_arr[2][3],motorPIN_output[2][3]);
 }

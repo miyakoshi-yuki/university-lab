@@ -16,10 +16,19 @@
  *  true, 正転
  *  false, 逆転 
  * 
+ * 引数:motorPIN_arr ステッピングモータのPIN番号;
+ * 
  * 返り値:
  * なし
  */
 
+// char motorPIN_arr[3][4] = {
+//   {0,2,3,4},
+//   {5,6,7,8},
+//   {10,11,12,13}
+// };
+
+// bool motorPIN_output[3][4] = {};
 
 
 // #define MotorPIN1 2 // 青
@@ -29,17 +38,44 @@
 
 // void setup(){
   
-//   pinMode(MotorPIN1, OUTPUT);  // デジタルピンを出力に設定
-//   pinMode(MotorPIN2, OUTPUT);
-//   pinMode(MotorPIN3, OUTPUT);
-//   pinMode(MotorPIN4, OUTPUT);
-// Serial.begin(9600);
+//   // pinMode(motorPIN_arr[0][0], OUTPUT);  // デジタルピンを出力に設定
+//   // pinMode(motorPIN_arr[0][1], OUTPUT);
+//   // pinMode(motorPIN_arr[0][2], OUTPUT);
+//   // pinMode(motorPIN_arr[0][3], OUTPUT);
+
+//   // pinMode(motorPIN_arr[1][0], OUTPUT);  // デジタルピンを出力に設定
+//   // pinMode(motorPIN_arr[1][1], OUTPUT);
+//   // pinMode(motorPIN_arr[1][2], OUTPUT);
+//   // pinMode(motorPIN_arr[1][3], OUTPUT);
+
+//   // pinMode(motorPIN_arr[2][0], OUTPUT);  // デジタルピンを出力に設定
+//   // pinMode(motorPIN_arr[2][1], OUTPUT);
+//   // pinMode(motorPIN_arr[2][2], OUTPUT);
+//   // pinMode(motorPIN_arr[2][3], OUTPUT);
+// // Serial.begin(9600);
 // }
 // void loop(){
 
-// turnStepperMotor(3,0);
+// turnStepperMotor(1,0,0);
+// turnStepperMotor(2,1,1);
+// turnStepperMotor(3,1,2);
 
-// delay(800);
+// digitalWrite(motorPIN_arr[0][0],motorPIN_output[0][0]);
+// digitalWrite(motorPIN_arr[0][1],motorPIN_output[0][1]);
+// digitalWrite(motorPIN_arr[0][2],motorPIN_output[0][2]);
+// digitalWrite(motorPIN_arr[0][3],motorPIN_output[0][3]);
+
+// digitalWrite(motorPIN_arr[1][0],motorPIN_output[1][0]);
+// digitalWrite(motorPIN_arr[1][1],motorPIN_output[1][1]);
+// digitalWrite(motorPIN_arr[1][2],motorPIN_output[1][2]);
+// digitalWrite(motorPIN_arr[1][3],motorPIN_output[1][3]);
+
+// digitalWrite(motorPIN_arr[2][0],motorPIN_output[2][0]);
+// digitalWrite(motorPIN_arr[2][1],motorPIN_output[2][1]);
+// digitalWrite(motorPIN_arr[2][2],motorPIN_output[2][2]);
+// digitalWrite(motorPIN_arr[2][3],motorPIN_output[2][3]);
+
+// delay(8);
 // // Serial.println(count);
 // // Serial.print(a);
 // // Serial.print(b);
@@ -48,43 +84,43 @@
 
 // }
 
-static char count = 0;
-static bool isHalf = true;
+static char count[3] = {0,0,0};
+static bool isHalf[3] = {true,true,true};
 
-static void onePhaseOn(bool isForward);
-static void twoPhaseOn(bool isForward);
+static void onePhaseOn(bool isForward, char motorPinNumber);
+static void twoPhaseOn(bool isForward, char motorPinNumber);
 
-void turnStepperMotor(char excitation,bool isForward){
+void turnStepperMotor(char excitation, bool isForward, char motorPinNumber){
 	switch (excitation){
   case 0:
     break;
     
 	case 1:
 		{
-			onePhaseOn(isForward);
+			onePhaseOn(isForward, motorPinNumber);
 		}
 		break;
 
 	case 2:
 		{
-			twoPhaseOn(isForward);
+			twoPhaseOn(isForward, motorPinNumber);
 		}
 		break;
 
 	case 3:
 		{
-      if (isHalf){
-        onePhaseOn(isForward);
+      if (isHalf[motorPinNumber]){
+        onePhaseOn(isForward, motorPinNumber);
         if(isForward){
-          count = (count != 0) ? count - 1 : 3 ;
+          count[motorPinNumber] = (count[motorPinNumber] != 0) ? count[motorPinNumber] - 1 : 3 ;
         }      
       }else{
-        twoPhaseOn(isForward);
+        twoPhaseOn(isForward, motorPinNumber);
         if(!isForward){
-          count = (count != 3) ? count + 1 : 0 ;
+          count[motorPinNumber] = (count[motorPinNumber] != 3) ? count[motorPinNumber] + 1 : 0 ;
         }
       }
-      isHalf = !isHalf ;
+      isHalf[motorPinNumber] = !isHalf[motorPinNumber] ;
       
 		}
 		break;
@@ -92,55 +128,47 @@ void turnStepperMotor(char excitation,bool isForward){
 
 }
 
-static unsigned char output;
-static void countUp(bool isForward);
+static unsigned char output[3];
+static void countUp(bool isForward, char motorPinNumber);
+static void setMotorPinOutput(char motorPinNumber);
 
-static void onePhaseOn(bool isForward){
-	output = 0x01 << count ;
-	bool a = ( output & 0x01 );
-	bool b = ( output & 0x02 );
-	bool c = ( output & 0x04 );
-	bool d = ( output & 0x08 );
+static void onePhaseOn(bool isForward, char motorPinNumber){
+	output[motorPinNumber] = 0x01 << count[motorPinNumber] ;
+  setMotorPinOutput(motorPinNumber);
 
-  digitalWrite(MotorPIN1,a);
-  digitalWrite(MotorPIN2,b);
-  digitalWrite(MotorPIN3,c);
-  digitalWrite(MotorPIN4,d);
-
-  countUp(isForward);
+  countUp(isForward, motorPinNumber);
 
 }
 
-static void twoPhaseOn(bool isForward){
+static void twoPhaseOn(bool isForward, char motorPinNumber){
   
-  output = (count != 3) ? 0x03 << count : 0x09 ;
-	bool a = ( output & 0x01 );
-	bool b = ( output & 0x02 );
-	bool c = ( output & 0x04 );
-	bool d = ( output & 0x08 );
+  output[motorPinNumber] = (count[motorPinNumber] != 3) ? 0x03 << count[motorPinNumber] : 0x09 ;
+  setMotorPinOutput(motorPinNumber);
 
-  digitalWrite(MotorPIN1,a);
-  digitalWrite(MotorPIN2,b);
-  digitalWrite(MotorPIN3,c);
-  digitalWrite(MotorPIN4,d);
-
-  countUp(isForward);
+  countUp(isForward, motorPinNumber);
 
 }
 
-static void countUp(bool isForward){
+static void setMotorPinOutput(char motorPinNumber){
+  motorPIN_output[motorPinNumber][0] = ( output[motorPinNumber] & 0x01 );
+	motorPIN_output[motorPinNumber][1] = ( output[motorPinNumber] & 0x02 );
+	motorPIN_output[motorPinNumber][2] = ( output[motorPinNumber] & 0x04 );
+	motorPIN_output[motorPinNumber][3] = ( output[motorPinNumber] & 0x08 );
+};
+
+static void countUp(bool isForward, char motorPinNumber){
 
   switch (isForward)
   {
   case 1:
     {
-      count = (count != 3) ? count + 1 : 0 ;
+      count[motorPinNumber] = (count[motorPinNumber] != 3) ? count[motorPinNumber] + 1 : 0 ;
     }
     break;
   
   case 0:
     {
-      count = (count != 0) ? count - 1 : 3 ;
+      count[motorPinNumber] = (count[motorPinNumber] != 0) ? count[motorPinNumber] - 1 : 3 ;
     }
     break;
   }
