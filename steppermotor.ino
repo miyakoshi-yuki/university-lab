@@ -5,7 +5,7 @@
  
 /*
  * ステッピングモーターを回転させる関数
- * turnStepperMotor(char excitation,bool isForward)
+ * turnStepperMotor(char excitation, bool isForward, char motorPinNumber)
  * 引数:excitation 励磁方式 
  *  0, 無回転
  *  1, 1-1相励磁
@@ -16,10 +16,12 @@
  *  true, 正転
  *  false, 逆転 
  * 
- * 引数:motorPIN_arr ステッピングモータのPIN番号;
+ * 引数:motorPinNumber ステッピングモータのPIN番号;
  * 
  * 返り値:
  * なし
+ * 
+ * motorPIN_output[][] 返り値はありませんが、この配列にbool値が代入されます。
  */
 
 // char motorPIN_arr[3][4] = {
