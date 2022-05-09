@@ -1,30 +1,9 @@
-
-
-// void setup(){
-  
-  
-// // Serial.begin(9600);
-// }
-// void loop(){
-
-
-// // Serial.println(count);
-// // Serial.print(a);
-// // Serial.print(b);
-// // Serial.print(c);
-// // Serial.println(d);
-
-// }
 #include <Wire.h>
 
 // MPU-6050のアドレス、レジスタ設定値
 #define MPU6050_WHO_AM_I     0x75  // Read Only
 #define MPU6050_PWR_MGMT_1   0x6B  // Read and Write
 #define MPU_ADDRESS  0x68
-// #define MotorPIN1 2 // 青
-// #define MotorPIN2 3 // ピンク
-// #define MotorPIN3 4 // 黄
-// #define MotorPIN4 5 // オレンジ
 
 char motorPIN_arr[3][4] = {
   {2,3,4,5},
@@ -113,15 +92,6 @@ void loop() {
   Serial.print(gyro_y); Serial.print(",");
   Serial.print(gyro_z); Serial.println("");
 
-  //   for(int i = 0; i<500; i++){
-  //   turnStepperMotor(1,0);
-  //   delay(20);
-  // }
-  // for(int i = 0; i<500; i++){
-  //   turnStepperMotor(1,1);
-  //   delay(20);
-  // }
-
   if(acc_x > 0){
     turnStepperMotor(1,1,0);
   }else{
@@ -138,7 +108,6 @@ void loop() {
     turnStepperMotor(3,1,2);
   }else{
     turnStepperMotor(3,0,2);
-  // delay(800);
   }
 
 digitalWrite(motorPIN_arr[0][0],motorPIN_output[0][0]);

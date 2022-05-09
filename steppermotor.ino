@@ -30,12 +30,6 @@
 
 // bool motorPIN_output[3][4] = {};
 
-
-// #define MotorPIN1 2 // 青
-// #define MotorPIN2 3 // ピンク
-// #define MotorPIN3 4 // 黄
-// #define MotorPIN4 5 // オレンジ
-
 // void setup(){
   
 //   // pinMode(motorPIN_arr[0][0], OUTPUT);  // デジタルピンを出力に設定
