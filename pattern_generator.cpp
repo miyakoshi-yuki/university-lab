@@ -1,4 +1,5 @@
 #include "pattern_generator.h"
+#include <Arduino.h>
 // #include <math.h>
 // #include <stdio.h>
 

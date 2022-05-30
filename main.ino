@@ -9,15 +9,15 @@ void setup() {
   Serial.begin(9600);
   
   delay(1000);
-  // mpu6050_Initialize();
+  mpu6050_Initialize();
 
 }
 extern float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
-extern int motorPIN_output[0]
+extern int motorPIN_output[3];
 
-void loop() {
-  // getMpu6050Data();
-  // spin();
+void loop(){
+  getMpu6050Data();
+  spin();
   turnStepperMotor(1,1,0);
   
   Serial.println(motorPIN_output[0]);
