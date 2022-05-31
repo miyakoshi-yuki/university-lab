@@ -1,5 +1,6 @@
 {
-    "port": "/dev/tty.usbmodem142301",
-    "board": "arduino:avr:uno",
-    "sketch": "steppermotor.ino"
+    "port": "/dev/tty.usbserial-14310",
+    "board": "arduino:avr:nano",
+    "sketch": "main.ino",
+    "configuration": "cpu=atmega328"
 }

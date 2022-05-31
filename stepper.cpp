@@ -34,9 +34,13 @@
 
 #include "stepper.h"
 
-int count[3] = {0,0,0};
-bool isHalf[3] = {true,true,true};
-int motorPIN_output[3] = {0,0,0};
+static int count[3] = {0,0,0};
+static bool isHalf[3] = {true,true,true};
+static int motorPIN_output[3] = {0,0,0};
+
+int getStepperBit(int motorPinNumber){
+  return motorPIN_output[motorPinNumber];
+}
 
 void turnStepperMotor(int excitation, bool isForward, int motorPinNumber){
 	switch (excitation){
@@ -76,10 +80,10 @@ void turnStepperMotor(int excitation, bool isForward, int motorPinNumber){
 
 }
 
-int output[3];
+static int output[3];
 
 
-void onePhaseOn(bool isForward, int motorPinNumber){
+static void onePhaseOn(bool isForward, int motorPinNumber){
   output[motorPinNumber] = 0x01 << count[motorPinNumber] ;
   setMotorPinOutput(motorPinNumber);
 
@@ -87,7 +91,7 @@ void onePhaseOn(bool isForward, int motorPinNumber){
 
 }
 
-void twoPhaseOn(bool isForward, int motorPinNumber){
+static void twoPhaseOn(bool isForward, int motorPinNumber){
   
   output[motorPinNumber] = (count[motorPinNumber] != 3) ? 0x03 << count[motorPinNumber] : 0x09 ;
   setMotorPinOutput(motorPinNumber);
@@ -96,7 +100,7 @@ void twoPhaseOn(bool isForward, int motorPinNumber){
 
 }
 
-void setMotorPinOutput(int motorPinNumber){
+static void setMotorPinOutput(int motorPinNumber){
   motorPIN_output[motorPinNumber] = 0x00;
   if( output[motorPinNumber] & 0x01 ){ motorPIN_output[motorPinNumber] =  motorPIN_output[motorPinNumber] | 0x01 ;}
   if( output[motorPinNumber] & 0x02 ){ motorPIN_output[motorPinNumber] =  motorPIN_output[motorPinNumber] | 0x02 ;}
@@ -105,7 +109,7 @@ void setMotorPinOutput(int motorPinNumber){
 
 };
 
-void countUp(bool isForward, int motorPinNumber){
+static void countUp(bool isForward, int motorPinNumber){
 
   if(isForward){
     count[motorPinNumber] = (count[motorPinNumber] != 3) ? count[motorPinNumber] + 1 : 0 ;

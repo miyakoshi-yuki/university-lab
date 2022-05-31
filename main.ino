@@ -13,17 +13,18 @@ void setup() {
 
 }
 extern float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
-extern int motorPIN_output[3];
 
 void loop(){
-  getMpu6050Data();
-  spin();
-  turnStepperMotor(1,1,0);
   
-  Serial.println(motorPIN_output[0]);
+  // spin();
+   getMpu6050Data();
+  // Serial.println(motorPIN_output[0]);
+  
+  turnStepperMotor(1,1,0);
+  int a = getStepperBit(0);
 
+  Serial.println(a);
   Serial.println(acc_x);
-  Serial.println("A");
 }
 
 //   if(acc_x > 0){
