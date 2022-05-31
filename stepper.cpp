@@ -38,6 +38,12 @@ static int count[3] = {0,0,0};
 static bool isHalf[3] = {true,true,true};
 static int motorPIN_output[3] = {0,0,0};
 
+static void onePhaseOn(bool isForward, int motorPinNumber);
+static void twoPhaseOn(bool isForward, int motorPinNumber);
+
+static void countUp(bool isForward, int motorPinNumber);
+static void setMotorPinOutput(int motorPinNumber);
+
 int getStepperBit(int motorPinNumber){
   return motorPIN_output[motorPinNumber];
 }

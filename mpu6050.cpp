@@ -1,6 +1,14 @@
 #include "mpu6050.h"
 #include <Wire.h>
 
+static int16_t axRaw, ayRaw, azRaw, gxRaw, gyRaw, gzRaw, Temperature;
+// static float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
+static float Data_arr[] = {0,0,0,0,0,0}; //acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
+
+float getMpu6050Data(char dataName){
+  return  Data_arr[dataName];
+}
+
 void mpu6050_Initialize(){
 // 初回の読み出し
   Wire.beginTransmission(MPU_ADDRESS);
@@ -9,10 +17,7 @@ void mpu6050_Initialize(){
   Wire.endTransmission();
 }
 
-int16_t axRaw, ayRaw, azRaw, gxRaw, gyRaw, gzRaw, Temperature;
-float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
-
-void getMpu6050Data() {
+void mpu6050_i2c() {
   Wire.beginTransmission(0x68);
   Wire.write(0x3B);
   Wire.endTransmission(false);
@@ -28,12 +33,12 @@ void getMpu6050Data() {
   gzRaw = Wire.read() << 8 | Wire.read();
 
   // 加速度値を分解能で割って加速度(G)に変換する
-  acc_x = axRaw / 16384.0;  //FS_SEL_0 16,384 LSB / g
-  acc_y = ayRaw / 16384.0;
-  acc_z = azRaw / 16384.0;
+  Data_arr[0] = axRaw / 16384.0;  //FS_SEL_0 16,384 LSB / g
+  Data_arr[1] = ayRaw / 16384.0;
+  Data_arr[2] = azRaw / 16384.0;
 
   // 角速度値を分解能で割って角速度(degrees per sec)に変換する
-  gyro_x = (float)gxRaw / 131;//FS_SEL_0 131 LSB / (°/s)
-  gyro_y = (float)gyRaw / 131;
-  gyro_z = (float)gzRaw / 131;
+  Data_arr[3] = (float)gxRaw / 131;//FS_SEL_0 131 LSB / (°/s)
+  Data_arr[4] = (float)gyRaw / 131;
+  Data_arr[5] = (float)gzRaw / 131;
 }

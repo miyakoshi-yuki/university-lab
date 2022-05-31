@@ -3,39 +3,39 @@
 // #include <math.h>
 // #include <stdio.h>
 
-const float gravity = 9.8; // m/s2
-const float delta_time = 0.01; // s
-const float centroid_height = 0.5; // m
-const float step_time = 0.5;
-const float ref_step_data[] = {0.05, 0.05, 0.0};
-float centroid_position[] = {0, 0.04};
-float centroid_velocity[] = {0,0};
-float step_position[] = {0, 0.05};
-float ref_step_position[] = {0, 0.05};
+static const float gravity = 9.8; // m/s2
+static const float delta_time = 0.01; // s
+static const float centroid_height = 0.5; // m
+static const float step_time = 0.5;
+static const float ref_step_data[] = {0.05, 0.05, 0.0};
+static float centroid_position[] = {0, 0.04};
+static float centroid_velocity[] = {0,0};
+static float step_position[] = {0, 0.05};
+static float ref_step_position[] = {0, 0.05};
 
 
-int step_count = 0;
-float centroid_acceleration[] = {0,0};
-float current_ref_step_data[] = {0,0,0};
-float current_ref_step_angle = 0;
-float current_ref_step_size[]={0,0};
-float next_ref_step_data[]={0,0,0};
-float next_ref_step_size[]={0,0};
-float next_ref_step_angle = 0;
-float Tc = 0;
-float C = 0;
-float S = 0;
-float h_xy[] = {0,0};
-float h_v_xy[] = {0,0};
-float next_target_position[] = {0,0};
-float next_target_velocity[] = {0,0};
-float D = 0;
+static int step_count = 0;
+static float centroid_acceleration[] = {0,0};
+static float current_ref_step_data[] = {0,0,0};
+static float current_ref_step_angle = 0;
+static float current_ref_step_size[]={0,0};
+static float next_ref_step_data[]={0,0,0};
+static float next_ref_step_size[]={0,0};
+static float next_ref_step_angle = 0;
+static float Tc = 0;
+static float C = 0;
+static float S = 0;
+static float h_xy[] = {0,0};
+static float h_v_xy[] = {0,0};
+static float next_target_position[] = {0,0};
+static float next_target_velocity[] = {0,0};
+static float D = 0;
 
-float xyi[] = {0,0};
-float vxyi[] = {0,0};
-float xyd[] = {0,0};
-float vxyd[] = {0,0};
-float next_step_position[] = {0,0};
+static float xyi[] = {0,0};
+static float vxyi[] = {0,0};
+static float xyd[] = {0,0};
+static float vxyd[] = {0,0};
+static float next_step_position[] = {0,0};
 
 // void setup(){
 //     Serial.begin(9600);

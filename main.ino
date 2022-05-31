@@ -12,19 +12,20 @@ void setup() {
   mpu6050_Initialize();
 
 }
-extern float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
+// extern float acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z;
 
 void loop(){
   
-  // spin();
-   getMpu6050Data();
+  spin();
+  mpu6050_i2c();
   // Serial.println(motorPIN_output[0]);
   
   turnStepperMotor(1,1,0);
   int a = getStepperBit(0);
+  float b = getMpu6050Data(1);
 
   Serial.println(a);
-  Serial.println(acc_x);
+  Serial.println(b);
 }
 
 //   if(acc_x > 0){

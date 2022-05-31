@@ -13,11 +13,6 @@
 //------------------------------------------------
 int getStepperBit(int motorPinNumber);
 void turnStepperMotor(int excitation, bool isForward, int motorPinNumber);
-void onePhaseOn(bool isForward, int motorPinNumber);
-void twoPhaseOn(bool isForward, int motorPinNumber);
-
-void countUp(bool isForward, int motorPinNumber);
-void setMotorPinOutput(int motorPinNumber);
 
 //------------------------------------------------
 #endif

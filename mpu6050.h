@@ -14,7 +14,8 @@
 #define MPU_ADDRESS  0x68
 #define MPU6050_ACCEL_XOUT_H     0x3B
 
+float getMpu6050Data(char dataName);
 void mpu6050_Initialize(void);
-void getMpu6050Data(void);
+void mpu6050_i2c(void);
 
 #endif	/* MPU6050_H */
