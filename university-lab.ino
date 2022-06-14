@@ -4,7 +4,7 @@
 #include "AX12A.h"
 #include "U8glib.h"
 #include "oled.h"
-#include "zelda_chest_noise.h"
+#include "voice_lsi.h"
 
 #define DirectionPin   (2u)
 #define BaudRate      (1000000ul)
@@ -28,7 +28,6 @@ void setup() {
   
   ax12a.begin(BaudRate, DirectionPin, &Serial);
 
-  playMusic();
 }
 
 void loop(){
@@ -47,6 +46,10 @@ void loop(){
   ax12a.move(ID,random(200,800));
 //    u8g.setPrintPos(30 , 50);
 //    u8g.print(reg);
+
+  talkLsi();
+
+  delay(1500);
   
 
 }
