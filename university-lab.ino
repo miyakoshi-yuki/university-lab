@@ -8,11 +8,8 @@
 
 #define DirectionPin   (2u)
 #define BaudRate      (1000000ul)
-#define ID        (13u)
+#define ID        (3u)
 
-
-
-//U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_DEV_0|U8G_I2C_OPT_NO_ACK|U8G_I2C_OPT_FAST);  // Fast I2C / TWI 
 
 int n = 0;    //カウントする変数nを定義
 int Temperature,Voltage,Position; 
@@ -44,8 +41,6 @@ void loop(){
   delay(1000);
 
   ax12a.move(ID,random(200,800));
-//    u8g.setPrintPos(30 , 50);
-//    u8g.print(reg);
 
   talkLsi();
 
